@@ -1,0 +1,8 @@
+{
+    "workbench.colorCustomizations": {
+        "titleBar.activeForeground": "#fff",
+        "titleBar.inactiveForeground": "#ffffffCC",
+        "titleBar.activeBackground": "#EB5027",
+        "titleBar.inactiveBackground": "#EB5027CC"
+    }
+}
