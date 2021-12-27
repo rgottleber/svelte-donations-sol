@@ -1,3 +1,4 @@
+pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
@@ -29,7 +30,7 @@ contract Fundraiser is Ownable {
         string memory _description,
         address payable _beneficiary,
         address _custodian
-    ) public {
+    ) {
         name = _name;
         image = _image;
         description = _description;
