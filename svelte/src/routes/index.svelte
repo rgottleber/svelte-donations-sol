@@ -5,9 +5,7 @@
 	import AddFundraiser from '../components/AddFundraiser.svelte';
 	import ConnectWallet from '../components/ConnectWallet.svelte';
 	import FundraiserFactoryABI from '../contracts/FundraiserFactory.json';
-	import Layout from './__layout.svelte';
-	import { onMount } from 'svelte';
-	const factoryAddress = '0x8C1478E0cdcFd3e1d625243F4a6d9399f4ce95dE';
+	const factoryAddress = '0x6C5e98Bf7BA512c0Cf5582Ad368800d9013C342B';
 	let web3Props = {};
 	$: show = false;
 	$: showAdd = false;
@@ -29,7 +27,7 @@
 	/>
 {:else}
 	{#if show}
-		<Fundraiser bind:show bind:fundraiserData {web3Props} />
+		<Fundraiser bind:show bind:fundraiserData {web3Props} {account} />
 	{/if}
 	{#if showAdd}
 		<AddFundraiser bind:showAdd bind:fundraisers {web3Props} />

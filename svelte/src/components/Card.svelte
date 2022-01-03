@@ -11,8 +11,10 @@
 	let description = '';
 	let imageURL = '';
 	let raised = '';
+	let custodian = '';
 	let value = 0;
 	let fundraiserContract;
+	let balance = 0;
 	onMount(async () => {
 		try {
 			value = await getETHPrice(web3Props);
@@ -22,6 +24,9 @@
 			imageURL = await fundraiserContract.image();
 			let val = await fundraiserContract.totalDonations();
 			raised = ethers.utils.formatEther(val);
+			custodian = await fundraiserContract.owner();
+			const fundaddr = fundraiser.substr(2);
+			balance = Number(ethers.utils.formatEther(await web3Props.provider.getBalance(fundraiser)));
 		} catch (e) {
 			console.log(e);
 		}
@@ -38,7 +43,9 @@
 				imageURL: imageURL,
 				address: fundraiser,
 				raised: raised,
-				fundraiserContract: fundraiserContract
+				fundraiserContract: fundraiserContract,
+				custodian: custodian,
+				balance: balance
 			};
 			show = true;
 		}}

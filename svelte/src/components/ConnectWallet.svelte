@@ -28,7 +28,8 @@
 		// update the props for the components
 		web3Props = {
 			fundraiserFactoryContract,
-			signer
+			signer,
+			provider
 		};
 		// }
 	}

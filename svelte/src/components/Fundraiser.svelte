@@ -2,10 +2,16 @@
 	import { fade } from 'svelte/transition';
 	import { ethers } from 'ethers';
 	import { getETHPrice } from '../utils/getETHPrice';
+	import { onMount } from 'svelte';
 	export let web3Props;
+	export let account;
 	export let show;
 	let donation;
 	let donating = false;
+	let ethPrice = 0;
+	onMount(async () => {
+		ethPrice = await getETHPrice(web3Props);
+	});
 	export let fundraiserData;
 	function handleKeyUp(event) {
 		if (window.getSelection().toString() !== '') {
@@ -30,6 +36,12 @@
 		let txn = await fundraiserData.fundraiserContract.donate({ value: donationValue });
 		donating = true;
 		await txn.wait();
+	}
+	async function withdrawFunds() {
+		let txn = await fundraiserData.fundraiserContract.withdraw();
+		await txn.wait();
+
+		alert('done');
 	}
 </script>
 
@@ -86,6 +98,15 @@
 						on:click={makeDonation}>Donate</button
 					>
 				</div>
+				{#if fundraiserData.balance > 0 && fundraiserData.custodian == account}
+					<div class="p-3  mt-2 text-center space-x-4 md:block">
+						<button
+							class="mb-2 md:mb-0 bg-red-500 border px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-green-600 disabled:bg-gray-500"
+							on:click={withdrawFunds}
+							>Withdraw $ {(Number(fundraiserData.balance) * ethPrice).toFixed(2)} USD</button
+						>
+					</div>
+				{/if}
 			</div>
 		</div>
 	{:else}
